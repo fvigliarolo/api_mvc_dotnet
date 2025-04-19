@@ -1,0 +1,17 @@
+***API***
+
+[x] Consulta de productos
+[] Consulta de categorias
+[x] Alta de productos
+[] Alta de categorias
+[] Actualizacion de productos
+[] Actializacion de categorias
+[] Eliminar productos
+[] Eliminar categorias
+
+[] Agregar validaciones de datos
+[] Conexion a BD
+
+***Swagger***
+***Web***
+***MAUI***
