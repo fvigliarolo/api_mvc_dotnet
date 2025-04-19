@@ -2,7 +2,6 @@ using api_mvc.Models;
 using api_mvc.Services;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace api_mvc.Controllers;
 
 [ApiController]
@@ -13,7 +12,6 @@ public class ProductosController: ControllerBase
     public ActionResult<IEnumerable<Producto>> GetProductos() // Getter del datastore
     {
         return Ok(ProductoDataStore.Current.Productos);
-        // return Ok("Hola desde el controlador de productos");
     }
 
     [HttpGet("{productoId}")]
@@ -31,6 +29,10 @@ public class ProductosController: ControllerBase
     public ActionResult<Producto> PostProducto(ProductoInsert productoInsert)
     {
         var maxProductoId = ProductoDataStore.Current.Productos.Max(x => x.Id);
+        var  selected_categoria= CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
+
+        if (selected_categoria == null)
+            return NotFound("No se encontró la categoría");
 
         var productoNuevo = new Producto() {
             Id = maxProductoId + 1,
@@ -38,12 +40,17 @@ public class ProductosController: ControllerBase
             Descripcion = productoInsert.Descripcion,
             Precio = productoInsert.Precio,
             Stock = productoInsert.Stock,
-            Categoria = new Categoria()
-            {
-                Id = productoInsert.Categoria.Id,
-                Nombre = productoInsert.Categoria.Nombre,
-                Descripcion = productoInsert.Categoria.Descripcion
-            }
+            IdCategoria = productoInsert.IdCategoria,
+            Categoria = selected_categoria,
+
+            // Categoria = new Categoria()
+            // {
+            //     Id = productoInsert.Categoria.Id,
+            //     Nombre = productoInsert.Categoria.Nombre,
+            //     Descripcion = productoInsert.Categoria.Descripcion
+            // }
+
+
         };
         ProductoDataStore.Current.Productos.Add(productoNuevo);
 

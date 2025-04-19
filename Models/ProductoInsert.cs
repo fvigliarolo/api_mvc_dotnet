@@ -22,5 +22,9 @@ public class ProductoInsert
     public int Stock { get; set; } = 0;
 
     [Required]
+    [Range(1, 100)]
+    public int IdCategoria { get; set; } = 0;
+
+    [Required]
     public Categoria Categoria { get; set; } = new Categoria();
 }

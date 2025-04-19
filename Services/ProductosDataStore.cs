@@ -19,12 +19,12 @@ public class ProductoDataStore
                 Descripcion = "Detegerente liquido para lavar ropa",
                 Precio = 10.0,
                 Stock = 100,
-                Categoria = new Categoria()
-                {
-                    Id = 1,
-                    Nombre = "Limpieza",
-                    Descripcion = "Productos de limpieza para el hogar"
-                }
+                // Categoria = new Categoria()
+                // {
+                //     Id = 1,
+                //     Nombre = "Limpieza",
+                //     Descripcion = "Productos de limpieza para el hogar"
+                // }
             },
             new Producto()
             {
@@ -33,12 +33,12 @@ public class ProductoDataStore
                 Descripcion = "Arroz de grano largo",
                 Precio = 20.0,
                 Stock = 200,
-                Categoria = new Categoria()
-                {
-                    Id = 2,
-                    Nombre = "Alimentos",
-                    Descripcion = "Productos alimenticios"
-                }
+                // Categoria = new Categoria()
+                // {
+                //     Id = 2,
+                //     Nombre = "Alimentos",
+                //     Descripcion = "Productos alimenticios"
+                // }
             }
         };
     }

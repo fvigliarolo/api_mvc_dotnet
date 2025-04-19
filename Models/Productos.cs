@@ -12,6 +12,8 @@ namespace api_mvc.Models
 
         public int Stock { get; set; }
 
+        public int IdCategoria { get; set; } = 0;
+
         public Categoria Categoria { get; set; } = new Categoria();
     }
 }
