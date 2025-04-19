@@ -29,9 +29,9 @@ public class ProductosController: ControllerBase
     public ActionResult<Producto> PostProducto(ProductoInsert productoInsert)
     {
         var maxProductoId = ProductoDataStore.Current.Productos.Max(x => x.Id);
-        var  selected_categoria= CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
+        var  categoria_reference= CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
 
-        if (selected_categoria == null)
+        if (categoria_reference == null)
             return NotFound("No se encontró la categoría");
 
         var productoNuevo = new Producto() {
@@ -41,16 +41,7 @@ public class ProductosController: ControllerBase
             Precio = productoInsert.Precio,
             Stock = productoInsert.Stock,
             IdCategoria = productoInsert.IdCategoria,
-            Categoria = selected_categoria,
-
-            // Categoria = new Categoria()
-            // {
-            //     Id = productoInsert.Categoria.Id,
-            //     Nombre = productoInsert.Categoria.Nombre,
-            //     Descripcion = productoInsert.Categoria.Descripcion
-            // }
-
-
+            Categoria = categoria_reference,
         };
         ProductoDataStore.Current.Productos.Add(productoNuevo);
 
@@ -58,5 +49,40 @@ public class ProductosController: ControllerBase
             new { productoId = productoNuevo.Id },
             productoNuevo
         );
+    }
+
+    [HttpPut("{productoId}")]
+    public ActionResult<Producto> PutProducto(int productoId, ProductoInsert productoInsert)
+    {
+        var producto = ProductoDataStore.Current.Productos.FirstOrDefault(x => x.Id == productoId); //prductID se obtiene de la URL
+        var categoria_reference = CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
+
+        if (producto == null)
+            return NotFound("No se encontró el producto");
+
+        if (categoria_reference == null)
+            return NotFound("No se encontró la categoría");
+
+        producto.Nombre = productoInsert.Nombre;
+        producto.Descripcion = productoInsert.Descripcion;
+        producto.Precio = productoInsert.Precio;
+        producto.Stock = productoInsert.Stock;
+        producto.IdCategoria = productoInsert.IdCategoria;
+        producto.Categoria = categoria_reference;
+
+        return Ok(producto);
+    }
+
+    [HttpDelete("{productoId}")]
+    public ActionResult DeleteProducto(int productoId)
+    {
+        var producto = ProductoDataStore.Current.Productos.FirstOrDefault(x => x.Id == productoId);
+
+        if (producto == null)
+            return NotFound("No se encontró el producto");
+
+        ProductoDataStore.Current.Productos.Remove(producto);
+
+        return Ok(ProductoDataStore.Current.Productos); // 204 No Content
     }
 }

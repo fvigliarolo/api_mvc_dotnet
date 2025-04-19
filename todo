@@ -1,12 +1,12 @@
 ***API***
 
 [x] Consulta de productos
-[] Consulta de categorias
+[x] Consulta de categorias
 [x] Alta de productos
-[] Alta de categorias
-[] Actualizacion de productos
+[x] Alta de categorias
+[x] Actualizacion de productos
 [] Actializacion de categorias
-[] Eliminar productos
+[x] Eliminar productos
 [] Eliminar categorias
 
 [] Agregar validaciones de datos
