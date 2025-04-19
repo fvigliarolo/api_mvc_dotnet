@@ -1,6 +1,7 @@
-using api_mvc.Models;
-using api_mvc.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; // Para poder traer relaciones en las entidades.
+using api_mvc.Services;
+using api_mvc.Models;
 
 namespace api_mvc.Controllers;
 
@@ -8,16 +9,24 @@ namespace api_mvc.Controllers;
 [Route("api/[controller]")]
 public class ProductosController: ControllerBase
 {
-    [HttpGet]
-    public ActionResult<IEnumerable<Producto>> GetProductos() // Getter del datastore
+    private readonly ApplicationDbContext _context;
+
+    public ProductosController(ApplicationDbContext context)
     {
-        return Ok(ProductoDataStore.Current.Productos);
+        _context = context;
+    }
+
+    [HttpGet]
+    public IActionResult GetProductos()
+    {
+        var productos = _context.Productos.Include(p => p.Categoria).ToList(); // LINQ para obtener productos con categoría
+        return Ok(productos);
     }
 
     [HttpGet("{productoId}")]
     public ActionResult<Producto> GetProducto(int productoId) 
     {
-        var producto = ProductoDataStore.Current.Productos.FirstOrDefault(x => x.Id == productoId);
+        var producto = _context.Productos.Include(p => p.Categoria).FirstOrDefault(x => x.Id == productoId);
 
         if (producto == null)
             return NotFound("No se encontró el producto");
@@ -28,14 +37,12 @@ public class ProductosController: ControllerBase
     [HttpPost]
     public ActionResult<Producto> PostProducto(ProductoInsert productoInsert)
     {
-        var maxProductoId = ProductoDataStore.Current.Productos.Max(x => x.Id);
-        var  categoria_reference= CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
+        var categoria_reference = _context.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
 
         if (categoria_reference == null)
             return NotFound("No se encontró la categoría");
 
         var productoNuevo = new Producto() {
-            Id = maxProductoId + 1,
             Nombre = productoInsert.Nombre,
             Descripcion = productoInsert.Descripcion,
             Precio = productoInsert.Precio,
@@ -43,7 +50,9 @@ public class ProductosController: ControllerBase
             IdCategoria = productoInsert.IdCategoria,
             Categoria = categoria_reference,
         };
-        ProductoDataStore.Current.Productos.Add(productoNuevo);
+
+        _context.Productos.Add(productoNuevo);
+        _context.SaveChanges();
 
         return CreatedAtAction(nameof(GetProducto),
             new { productoId = productoNuevo.Id },
@@ -54,8 +63,8 @@ public class ProductosController: ControllerBase
     [HttpPut("{productoId}")]
     public ActionResult<Producto> PutProducto(int productoId, ProductoInsert productoInsert)
     {
-        var producto = ProductoDataStore.Current.Productos.FirstOrDefault(x => x.Id == productoId); //prductID se obtiene de la URL
-        var categoria_reference = CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
+        var producto = _context.Productos.Include(p => p.Categoria).FirstOrDefault(x => x.Id == productoId); //prductID se obtiene de la URL
+        var categoria_reference = _context.Categorias.FirstOrDefault(x => x.Id == productoInsert.IdCategoria);
 
         if (producto == null)
             return NotFound("No se encontró el producto");
@@ -70,19 +79,23 @@ public class ProductosController: ControllerBase
         producto.IdCategoria = productoInsert.IdCategoria;
         producto.Categoria = categoria_reference;
 
+        _context.Productos.Update(producto);
+        _context.SaveChanges();
+
         return Ok(producto);
     }
 
     [HttpDelete("{productoId}")]
     public ActionResult DeleteProducto(int productoId)
     {
-        var producto = ProductoDataStore.Current.Productos.FirstOrDefault(x => x.Id == productoId);
+        var producto = _context.Productos.FirstOrDefault(x => x.Id == productoId);
 
         if (producto == null)
             return NotFound("No se encontró el producto");
 
-        ProductoDataStore.Current.Productos.Remove(producto);
+        _context.Productos.Remove(producto);
+        _context.SaveChanges();
 
-        return Ok(ProductoDataStore.Current.Productos); // 204 No Content
+        return Ok(_context.Productos.Include(p => p.Categoria).ToList()); // 204 No Content????
     }
 }
