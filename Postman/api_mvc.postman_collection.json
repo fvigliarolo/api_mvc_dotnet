@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "a193aa6b-4fb2-4b36-a86d-5daa0ebbd86b",
+		"name": "api_mvc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39146326",
+		"_collection_link": "https://loreposho.postman.co/workspace/Lo'Reposho-Workspace~c73801d5-18bb-4410-8ebd-bb5944840f19/collection/39146326-a193aa6b-4fb2-4b36-a86d-5daa0ebbd86b?action=share&source=collection_link&creator=39146326"
+	},
+	"item": [
+		{
+			"name": "Obtener un Producto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/api/productos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"productos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un Producto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/api/productos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"productos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Producto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/api/productos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Producto",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"nombre\": \"Arroz\",\n        \"descripcion\": \"Grano de arroz largo\",\n        \"precio\": 20,\n        \"stock\": 200,\n        \"idCategoria\": 1,\n        \"categoria\": {\n            \"id\": 0,\n            \"nombre\": \"\",\n            \"descripcion\": \"\"\n        }\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5056/api/productos/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"productos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categorias",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/Api/Categorias/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"Api",
+						"Categorias",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una Categoria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/Api/Categorias/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"Api",
+						"Categorias",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una Categoria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5056/Api/Categorias/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"Api",
+						"Categorias",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Nueva Categoria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Nombre\":\"Entretenimiento hogar\",\n    \"Descripcion\":\"Juegos de mesa y mas\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5056/api/Categorias/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"Categorias",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Categoria",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"nombre\": \"Ropa\",\n        \"descripcion\": \"Prendas de vestir y accesorios\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5056/api/Categorias/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5056",
+					"path": [
+						"api",
+						"Categorias",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
