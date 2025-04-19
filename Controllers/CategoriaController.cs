@@ -43,4 +43,31 @@ public class CategoriasController: ControllerBase // El endpoint será lo que se
         );
     }
 
+    [HttpPut("{categoriaId}")]
+    public ActionResult<Categoria> PutCategoria(int categoriaId, Categoria categoria)
+    {
+        var categoria_reference = CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == categoriaId); //prductID se obtiene de la URL
+
+        if (categoria_reference == null)
+            return NotFound("No se encontró la categoría");
+
+        categoria_reference.Nombre = categoria.Nombre;
+        categoria_reference.Descripcion = categoria.Descripcion;
+
+        return Ok(categoria_reference);
+    }
+
+    [HttpDelete("{categoriaId}")]
+    public ActionResult DeleteCategoria(int categoriaId)
+    {
+        var categoria_reference = CategoriaDataStore.Current.Categorias.FirstOrDefault(x => x.Id == categoriaId); //prductID se obtiene de la URL
+
+        if (categoria_reference == null)
+            return NotFound("No se encontró la categoría");
+
+        CategoriaDataStore.Current.Categorias.Remove(categoria_reference);
+
+        return Ok(CategoriaDataStore.Current.Categorias);
+    }
+
 }
