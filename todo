@@ -5,12 +5,12 @@
 [x] Alta de productos
 [x] Alta de categorias
 [x] Actualizacion de productos
-[] Actializacion de categorias
+[x] Actializacion de categorias
 [x] Eliminar productos
-[] Eliminar categorias
+[x] Eliminar categorias
 
 [] Agregar validaciones de datos
-[] Conexion a BD
+[x] Conexion a BD
 
 ***Swagger***
 ***Web***
