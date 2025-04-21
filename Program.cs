@@ -1,13 +1,26 @@
 using Microsoft.EntityFrameworkCore;
 using api_mvc.Services;
+using Microsoft.OpenApi.Models;
+// using Swashbuckle.AspNetCore.SwaggerGen;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 
 // Agregar el contexto de base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -15,13 +28,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Documentar la API con Swagger
 // if (app.Environment.IsDevelopment())
 // {
 //     app.UseSwagger();
 //     app.UseSwaggerUI();
 // }
 
+app.UseCors("AllowReactApp");
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
